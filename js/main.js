@@ -73,17 +73,40 @@ const svgPinTarget = "#2e7dd6";
 
 /* ---------- Állomások renderelése ---------- */
 
+// Egy állomás "belső" tartalma (hely-sor + Google Térkép link + leírás + idézet +
+// szerző-cimkék + versek-link) — ugyanez a sablon adja a lista-kártyát ÉS a
+// térkép-popupból nyitható állomás-modal tartalmát is, hogy ne kelljen két helyen
+// karbantartani.
+function stopBodyHtml(s) {
+  const tags = s.authors
+    .map((a) => `<span class="tag" style="background:${AUTHORS[a].color}33">${AUTHORS[a].name}</span>`)
+    .join("");
+  const quote = s.quote
+    ? `<div class="quote-block">${escapeHtml(s.quote.text).replace(/\n/g, "<br>")}<span class="quote-cite">${s.quote.cite}</span></div>`
+    : "";
+  return `
+    <div class="stop-loc-row">
+      <div class="stop-loc">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        ${s.loc}
+      </div>
+      <a class="gmaps-link" href="${googleMapsStopUrl(s)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-5 2V6l5-2 6 2 5-2v14l-5 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
+        Google Térkép &amp; navigálás
+      </a>
+    </div>
+    ${s.body}
+    ${quote}
+    <div class="stop-authors">${tags}</div>
+    <div class="stop-links"><a href="versek.html#${s.authors[0]}" data-author="${s.authors[0]}" data-modal-trigger>Versek és forrás olvasása</a></div>
+  `;
+}
+
 function renderStops() {
   const wrap = document.getElementById("stops-wrap");
   if (!wrap) return;
-  wrap.innerHTML = WALK_STOPS.map((s) => {
-    const tags = s.authors
-      .map((a) => `<span class="tag" style="background:${AUTHORS[a].color}33">${AUTHORS[a].name}</span>`)
-      .join("");
-    const quote = s.quote
-      ? `<div class="quote-block">${escapeHtml(s.quote.text).replace(/\n/g, "<br>")}<span class="quote-cite">${s.quote.cite}</span></div>`
-      : "";
-    return `
+  wrap.innerHTML = WALK_STOPS.map(
+    (s) => `
       <div class="stop" id="${s.id}" data-stop-id="${s.id}">
         <div class="stop-marker">
           <button class="stop-num" data-jump="${s.id}" aria-label="${s.num}. állomás megjelölése a térképen">${s.num}</button>
@@ -92,23 +115,10 @@ function renderStops() {
         <div class="stop-card">
           <div class="stop-eyebrow">${s.num}. állomás <span class="stop-distance" data-distance-for="${s.id}"></span></div>
           <h3>${s.title}</h3>
-          <div class="stop-loc-row">
-            <div class="stop-loc">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              ${s.loc}
-            </div>
-            <a class="gmaps-link" href="${googleMapsStopUrl(s)}" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-5 2V6l5-2 6 2 5-2v14l-5 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
-              Google Térkép &amp; navigálás
-            </a>
-          </div>
-          ${s.body}
-          ${quote}
-          <div class="stop-authors">${tags}</div>
-          <div class="stop-links"><a href="versek.html#${s.authors[0]}" data-author="${s.authors[0]}" data-modal-trigger>Versek és forrás olvasása</a></div>
+          ${stopBodyHtml(s)}
         </div>
-      </div>`;
-  }).join("");
+      </div>`
+  ).join("");
 
   wrap.querySelectorAll("[data-jump]").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -117,15 +127,6 @@ function renderStops() {
         window.__walkMap.panTo([stop.lat, stop.lon]);
         window.__walkMarkers[stop.id].openPopup();
       }
-    });
-  });
-
-  wrap.querySelectorAll("[data-modal-trigger]").forEach((a) => {
-    a.addEventListener("click", (e) => {
-      // Ctrl/Cmd/középső kattintásnál hagyjuk az alap "új lapon megnyitás" működést
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
-      e.preventDefault();
-      openPoemsModal(a.dataset.author);
     });
   });
 }
@@ -192,13 +193,13 @@ function initMap() {
     marker.bindPopup(
       `<div class="popup-title">${s.num}. ${s.title}</div>
        <div class="popup-desc">${s.teaser}</div>
-       <a class="popup-gmaps" href="${googleMapsStopUrl(s)}" target="_blank" rel="noopener">Megnyitás Google Térképen →</a>`
+       <div class="popup-actions">
+         <button class="popup-detail-btn" data-stop-detail="${s.id}">Lássam az állomást →</button>
+         <a class="popup-gmaps" href="${googleMapsStopUrl(s)}" target="_blank" rel="noopener">Google Térképen megnyitva navigálok →</a>
+       </div>`
     );
-    marker.on("click", () => {
-      const target = document.getElementById(s.id);
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
-      wrap_highlight(s.id);
-    });
+    // Kattintásra a Leaflet automatikusan megnyitja a fenti popupot a térképen —
+    // ez NEM görgeti/ugratja el a fő oldalt, marad a térkép nézetben.
     window.__walkMarkers[s.id] = marker;
     latlngs.push([s.lat, s.lon]);
   });
@@ -363,8 +364,13 @@ async function openPoemsModal(authorKey) {
   const meta = (typeof AUTHORS !== "undefined" && AUTHORS[authorKey]) || null;
 
   titleEl.textContent = meta ? `${meta.name} · ${meta.years}` : "Versek és szerzők";
-  if (footerLink) footerLink.href = `versek.html#${authorKey}`;
+  if (footerLink) {
+    footerLink.textContent = "Megnyitás önálló oldalon, mind az 5 verssel →";
+    footerLink.href = `versek.html#${authorKey}`;
+    footerLink.onclick = null;
+  }
   body.innerHTML = '<p class="modal-loading">Betöltés…</p>';
+  if (window.__walkMap) window.__walkMap.closePopup();
   showModal(overlay);
 
   try {
@@ -383,6 +389,38 @@ async function openPoemsModal(authorKey) {
   }
 }
 
+// A térkép-popup "Lássam az állomást" gombja nyitja meg — ugyanazt a modal-t
+// használja, mint a versek popup, csak most az állomás teljes leírásával töltve fel.
+function openStopModal(stopId) {
+  const overlay = document.getElementById("poems-modal");
+  const s = WALK_STOPS.find((x) => x.id === stopId);
+  if (!s) return;
+  if (!overlay) {
+    document.getElementById(stopId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+  const titleEl = overlay.querySelector(".modal-head h3");
+  const body = overlay.querySelector(".modal-body");
+  const footerLink = overlay.querySelector("[data-modal-fulllink]");
+
+  titleEl.textContent = `${s.num}. ${s.title}`;
+  body.innerHTML = stopBodyHtml(s);
+  if (footerLink) {
+    footerLink.textContent = "Ugrás az állomáshoz a lista-nézetben →";
+    footerLink.href = `#${s.id}`;
+    footerLink.onclick = (e) => {
+      e.preventDefault();
+      closePoemsModal();
+      document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+  }
+  if (window.__walkMap) {
+    window.__walkMap.closePopup();
+    window.__walkMap.panTo([s.lat, s.lon]);
+  }
+  showModal(overlay);
+}
+
 function showModal(overlay) {
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
@@ -399,6 +437,26 @@ function closePoemsModal() {
 
 function initModal() {
   const overlay = document.getElementById("poems-modal");
+
+  // Eseménydelegálás: a "Versek és forrás olvasása" linkek és a térkép-popup
+  // "Lássam az állomást" gombjai is dinamikusan (renderelés / Leaflet popup)
+  // kerülnek a DOM-ba, ezért egyetlen, dokumentum-szintű listener kezeli mindet —
+  // ez azt is jelenti, hogy az állomás-modal BELSEJÉBEN újra megjelenő
+  // "Versek és forrás olvasása" link is működik, nincs szükség újra-bindolásra.
+  document.addEventListener("click", (e) => {
+    const modalTrigger = e.target.closest("[data-modal-trigger]");
+    if (modalTrigger) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+      e.preventDefault();
+      openPoemsModal(modalTrigger.dataset.author);
+      return;
+    }
+    const detailBtn = e.target.closest("[data-stop-detail]");
+    if (detailBtn) {
+      openStopModal(detailBtn.dataset.stopDetail);
+    }
+  });
+
   if (!overlay) return;
   overlay.querySelectorAll("[data-modal-close]").forEach((el) =>
     el.addEventListener("click", (e) => {
