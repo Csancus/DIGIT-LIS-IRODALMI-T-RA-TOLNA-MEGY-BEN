@@ -385,7 +385,7 @@ async function openPoemsModal(authorKey) {
     body.innerHTML = section.innerHTML;
   } catch (err) {
     body.innerHTML = `<p class="modal-error">Nem sikerült betölteni a tartalmat itt a helyszínen.
-      <a href="versek.html#${authorKey}">Megnyitás önálló oldalon →</a></p>`;
+      <a href="versek.html#${authorKey}" target="_blank" rel="noopener">Megnyitás önálló oldalon →</a></p>`;
   }
 }
 

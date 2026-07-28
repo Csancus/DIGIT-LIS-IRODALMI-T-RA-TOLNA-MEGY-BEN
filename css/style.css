@@ -360,7 +360,7 @@ a {
 
 /* ---------- Map ---------- */
 
-.map-section { padding: 2.5rem 0 1rem; }
+.map-section { padding: 2.5rem 0 1rem; scroll-margin-top: 76px; }
 .map-frame {
   border-radius: var(--radius-lg);
   overflow: hidden;
