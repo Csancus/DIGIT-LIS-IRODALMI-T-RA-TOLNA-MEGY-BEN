@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Irodalmi Séta Szekszárdon — öt szerző, öt táj</title>
 <meta name="description" content="Virtuális irodalmi séta Szekszárdon és környékén Babits Mihály, Garay János, Baka István, Mészöly Miklós és Dienes Valéria nyomában.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍇</text></svg>">
@@ -19,12 +19,17 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
       Irodalmi Séta Szekszárdon
     </a>
-    <div class="navlinks">
+    <div class="navlinks" id="main-navlinks">
       <a href="index.html" class="active">A séta</a>
       <a href="versek.html">Versek &amp; szerzők</a>
-      <a href="MUKODES.md">Működés</a>
+      <a href="mukodes.html">Működés</a>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()">☀︎ / ☾</button>
+    <div class="nav-right">
+      <button class="theme-toggle" onclick="toggleTheme()">☀︎ / ☾</button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Menü megnyitása" aria-expanded="false" aria-controls="main-navlinks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
   </div>
 </nav>
 
@@ -66,6 +71,14 @@
       <span><span class="dot" style="background:#7a4a8a"></span>Dienes</span>
       <span>· kattints egy jelölőre az adott állomás megnyitásához</span>
     </div>
+    <div class="map-toolbar">
+      <button class="map-btn" id="locate-btn" aria-pressed="false">📍 Hol vagyok?</button>
+      <a class="map-btn" id="gmaps-route-btn" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-5 2V6l5-2 6 2 5-2v14l-5 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
+        Teljes útvonal Google Térképen
+      </a>
+      <span id="locate-status" role="status"></span>
+    </div>
   </div>
 </section>
 
@@ -92,10 +105,23 @@
       terjedelemben szerepelnek; a még szerzői jogi védelem alatt álló szerzők
       (Baka István, Mészöly Miklós, Dienes Valéria) esetében rövid idézetek és
       saját összefoglalók olvashatók, forrásmegjelöléssel — részletek a
-      <a href="MUKODES.md">MUKODES.md</a> dokumentumban.</p>
+      <a href="mukodes.html">Működés</a> oldalon.</p>
     <p>© <span id="year"></span> · Nyílt forráskódú projekt · <a href="https://github.com/Csancus/DIGIT-LIS-IRODALMI-T-RA-TOLNA-MEGY-BEN">a repó a GitHubon</a></p>
   </div>
 </footer>
+
+<div class="modal-overlay" id="poems-modal" aria-hidden="true" data-modal-close>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-head">
+      <h3 id="modal-title">Versek és szerzők</h3>
+      <button class="modal-close" data-modal-close aria-label="Bezárás">✕</button>
+    </div>
+    <div class="modal-body"><p class="modal-loading">Betöltés…</p></div>
+    <div class="modal-footer">
+      <a href="versek.html" data-modal-fulllink>Megnyitás önálló oldalon, mind az 5 verssel →</a>
+    </div>
+  </div>
+</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="js/stops-data.js"></script>

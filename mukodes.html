@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Működés — Irodalmi Séta Szekszárdon</title>
+<meta name="description" content="Hogyan épül fel az Irodalmi Séta Szekszárdon projekt: tartalom eredete, szerzői jogi megközelítés, technikai felépítés.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍇</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      Irodalmi Séta Szekszárdon
+    </a>
+    <div class="navlinks" id="main-navlinks">
+      <a href="index.html">A séta</a>
+      <a href="versek.html">Versek &amp; szerzők</a>
+      <a href="mukodes.html" class="active">Működés</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" onclick="toggleTheme()">☀︎ / ☾</button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Menü megnyitása" aria-expanded="false" aria-controls="main-navlinks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" style="padding-bottom: 2rem;">
+  <div class="container">
+    <p class="kicker">Hogyan épül fel a projekt</p>
+    <h1>Működés</h1>
+    <p class="lead">
+      Mit tartalmaz az oldal, honnan származik a tartalom, milyen szerzői jogi
+      elvek mentén válogattunk, és milyen technikával épült a séta.
+    </p>
+  </div>
+</header>
+
+<section class="doc-page">
+  <div class="container prose">
+
+    <h2>1. Mi ez a projekt?</h2>
+    <p>Virtuális irodalmi séta Szekszárdon és környékén, öt szerző köré építve:</p>
+    <ul>
+      <li><strong>Babits Mihály</strong> (1883–1941)</li>
+      <li><strong>Garay János</strong> (1812–1853)</li>
+      <li><strong>Baka István</strong> (1948–1995)</li>
+      <li><strong>Mészöly Miklós</strong> (1921–2001)</li>
+      <li><strong>Dienes Valéria</strong> (1879–1978)</li>
+    </ul>
+    <p>Mindannyian Szekszárdon születtek (vagy — mint Baka és Mészöly — ott nőttek fel
+      és iskolába jártak), és mindegyikük életműve valamilyen módon a szekszárdi/tolnai
+      tájhoz kötődik. A projekt két fő oldalból áll:</p>
+    <ul>
+      <li><strong><a href="index.html">A séta</a></strong> — 10 állomás, térképpel, valós
+        szekszárdi helyszínekkel, rövid kontextussal és egy-egy odaillő idézettel.</li>
+      <li><strong><a href="versek.html">Versek &amp; szerzők</a></strong> — a teljes
+        irodalmi anyag: mind az öt szerzőtől 5–5 mű, szerzőnként rendezve, életrajzzal
+        és helyszín-listával. A séta oldalról ez felugró ablakban (popup) is elérhető,
+        anélkül hogy el kellene navigálni a térképtől.</li>
+    </ul>
+
+    <h2>2. Hogyan készült a tartalom?</h2>
+    <p>A tartalom <strong>nem kitalált</strong> — minden életrajzi adat, idézet és
+      helyszín tényleges forrásból (Wikipédia, MEK — Magyar Elektronikus Könyvtár,
+      EPA — Elektronikus Periodika Archívum, DIA — Digitális Irodalmi Akadémia, PIM,
+      hivatalos emlékhely-oldalak, helyi újságok) lett összegyűjtve és ellenőrizve.
+      Öt párhuzamos kutatási menet zajlott (egy-egy a szerzőnkénti életrajzhoz,
+      versekhez és helyszínekhez), majd ezek anyagát szintetizáltuk egy koherens
+      sétává.</p>
+    <p>A versszövegeket a másodlagos (kutatási) forrásokból nem vettük át változtatás
+      nélkül: a közkincs szerzőknél (Babits, Garay) az elsődleges digitális
+      archívumokból (EPA Nyugat-archívum, MEK) töltöttük le és ellenőriztük újra a
+      teljes, betűhív szöveget — enélkül ugyanis előfordulhattak volna OCR-hibák vagy
+      kihagyott ékezetes magánhangzók (pl. „ő", „ű") a közbülső feldolgozás során.</p>
+
+    <h3>Szerzői jogi megközelítés</h3>
+    <p>Ez a legfontosabb szabály, amit a projekt következetesen betart:</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Szerző</th><th>Halálozás éve</th><th>Magyarországi közkincs-státusz (70 év pma)</th><th>Mit tartalmaz az oldal</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Garay János</td><td>1853</td><td>Közkincs</td><td><strong>Teljes versszövegek</strong></td></tr>
+          <tr><td>Babits Mihály</td><td>1941</td><td>Közkincs (2012 óta)</td><td><strong>Teljes versszövegek</strong></td></tr>
+          <tr><td>Dienes Valéria</td><td>1978</td><td>Védett kb. 2048-ig</td><td>Rövid (2–4 soros) idézet + saját összefoglaló + forráslink</td></tr>
+          <tr><td>Mészöly Miklós</td><td>2001</td><td>Védett kb. 2071-ig</td><td>Rövid (2–4 soros) idézet + saját összefoglaló + forráslink</td></tr>
+          <tr><td>Baka István</td><td>1995</td><td>Védett kb. 2065-ig</td><td>Rövid (2–4 soros) idézet + saját összefoglaló + forráslink</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>A még védett szerzőknél tehát <strong>sehol nem szerepel teljes vers vagy
+      novella szó szerint</strong> — csak rövid, azonosítás/kritika céljából idézhető
+      részlet, saját szavakkal írt kontextussal, és mindenhol pontos link a teljes
+      szöveg jogtiszta forrásához (bakaistvan.hu, a DIA könyvtára, a Szent István
+      Társulat kiadványa stb.).</p>
+
+    <h2>3. A séta útvonala</h2>
+    <p>A 10 állomás egy geográfiailag is bejárható kört ír le a városban:</p>
+    <ol>
+      <li><strong>Garay tér</strong> — a Garay-szobor, a séta kapuja</li>
+      <li><strong>Wosinsky Mór Megyei Múzeum</strong> — mind az öt szerző hagyatékának egy-egy darabja</li>
+      <li><strong>Garay János Gimnázium</strong> — Baka és Mészöly egykori iskolája</li>
+      <li><strong>Babits Mihály Kulturális Központ / Mészöly-szobor</strong> — Agora sétány</li>
+      <li><strong>Babits Mihály Emlékház</strong> — szülőház, benne Dienes és Baka emlékszobájával is</li>
+      <li><strong>Mészöly Miklós Emlékház (Irodalom Háza)</strong> — a Séd-patak kanyarulatában</li>
+      <li><strong>Dienes Valéria Általános Iskola</strong></li>
+      <li><strong>A Csörge-tó egykori helye</strong> — „szellem-helyszín" Baka egyik verséhez</li>
+      <li><strong>Alsóvárosi temető</strong> — Baka István sírja</li>
+      <li><strong>Kálvária-kilátó (Szőlő-kilátó), Bartina-hegy</strong> — záró, panorámás állomás</li>
+    </ol>
+
+    <h3>Koordináták pontossága</h3>
+    <p>A helyszínek nagy része OpenStreetMap/Nominatim nyílt geokódoló szolgáltatással
+      lett ellenőrizve (pontos cím → GPS-koordináta). Néhány helyszínnél (Mészöly
+      Miklós Emlékház, a Babits Kulturális Központ pontos épülete, a Csörge-tó egykori
+      helye) a forrásokban csak leíró jellegű helymeghatározás állt rendelkezésre
+      (pl. „a Babits-ház szomszédságában", „a város nyugati határában") — ezeknél a
+      térképi pont <strong>közelítő, illusztrációs célú</strong>, a
+      <code>js/stops-data.js</code> fájlban <code>approx: true</code> jelöléssel. Egy
+      esetleges pontosításhoz a Szekszárdi Városházával vagy a Wosinsky Mór Múzeummal
+      érdemes egyeztetni.</p>
+
+    <h2>4. Térkép, navigálás és élő helyzet</h2>
+    <p>A térkép <a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet.js</a>
+      + OpenStreetMap csempékkel épült, teljesen interaktív: a jelölők kattinthatók
+      (megnyitják a hozzá tartozó állomást), és fordítva — egy állomás-kártyára
+      kattintva a térkép odaugrik és megnyitja a popupot.</p>
+    <ul>
+      <li><strong>Google Térkép linkek</strong> — minden állomásnál van egy „Google
+        Térkép &amp; navigálás" gomb, ami az adott pontot nyitja meg a Google Térképen
+        (mobilon a telepített Google Maps appban), valamint egy „Teljes útvonal Google
+        Térképen" gomb, ami az összes állomást bejárható gyalogos útvonalként nyitja
+        meg (Google Maps Directions URL, <code>travelmode=walking</code>).</li>
+      <li><strong>„Hol vagyok?" élő helyzet</strong> — a böngésző helymeghatározását
+        (Geolocation API) használva, opt-in gombbal bekapcsolható egy kék pötty, ami
+        séta közben mutatja a felhasználó valós pozícióját a térképen, és
+        automatikusan kiszámolja és kijelzi a legközelebbi állomást és a hozzá vezető
+        távolságot. A helyzet csak a böngészőben, kliensoldalon dolgozódik fel, sehova
+        nem kerül elküldésre vagy elmentésre.</li>
+    </ul>
+
+    <h2>5. Technikai felépítés</h2>
+    <p>A projekt egy egyszerű, build-lépés nélküli statikus weboldal — pontosan azért,
+      hogy változtatás nélkül, közvetlenül működjön GitHub Pages-en.</p>
+    <div class="table-wrap">
+      <pre class="file-tree">├── index.html          # a séta (hero, térkép, 10 állomás, versek-popup)
+├── versek.html         # teljes irodalmi archívum szerzőnként
+├── mukodes.html        # ez az oldal
+├── css/style.css       # közös design rendszer (bordó–arany szőlőhegy-paletta)
+├── js/stops-data.js    # az állomások adatai (cím, koordináta, szöveg, idézet)
+├── js/main.js          # térkép, Google Térkép linkek, élő helyzet, popup, mobil nav, téma
+├── README.md
+└── MUKODES.md          # ennek az oldalnak a Markdown-forrása (repóban olvasható)</pre>
+    </div>
+    <ul>
+      <li><strong>Állomások renderelése</strong>: az <code>index.html</code> egy üres
+        <code>#stops-wrap</code> konténert tartalmaz, amelyet a <code>main.js</code> a
+        <code>stops-data.js</code>-ben tárolt adatokból generál le, kattintható
+        térkép-jelölőkkel összekötve — így az állomások szövege és a térkép egyetlen
+        adatforrásból (<code>WALK_STOPS</code> tömb) táplálkozik.</li>
+      <li><strong>Versek popup</strong>: a „Versek és forrás olvasása" gomb nem
+        navigál el az oldalról — helyette JavaScript-tel lekéri a
+        <code>versek.html</code> megfelelő szerző-szekcióját, és egy felugró ablakban
+        jeleníti meg. Ha a JavaScript nem elérhető, a gomb sima linkként viselkedik,
+        és megnyitja a <code>versek.html</code> oldalt közvetlenül.</li>
+      <li><strong>Design</strong>: a paletta a szekszárdi borvidékre (bordó, arany,
+        krém) és az esti szőlőhegyi hangulatra épül; minden oldal támogatja a
+        sötét/világos módot (rendszerbeállítás alapján, illetve kézi kapcsolóval,
+        <code>localStorage</code>-ban megjegyezve).</li>
+      <li><strong>Mobilbarát felépítés</strong>: reszponzív rács, hamburger-menü kis
+        képernyőn, legalább 40–44 px-es érintési felületek, a térkép „kattints az
+        aktiváláshoz" gesztuskezeléssel (hogy a lapgörgetés ne akadjon fenn az
+        egérgörgős zoomoláson asztali nézetben, mobilon pedig az érintéses
+        pöccintés/nagyítás alapból működik).</li>
+    </ul>
+    <p>Nincs backend, adatbázis vagy build-folyamat — a repó gyökeréből a GitHub Pages
+      közvetlenül ki tudja szolgálni.</p>
+
+    <h2>6. Helyben futtatás / fejlesztés</h2>
+    <p>Nincs szükség telepítésre — bármelyik statikus fájlszerver megfelel, pl.:</p>
+    <pre><code>npx serve .
+# vagy
+python -m http.server 8000</code></pre>
+    <p>majd nyisd meg a <code>http://localhost:8000</code> címet. (A versek-popuphoz
+      szükséges <code>fetch()</code> csak http(s) protokollon működik, a fájlrendszerről
+      közvetlenül megnyitott, <code>file://</code> előtaggal induló oldalon nem — ott a
+      gomb a teljes <code>versek.html</code> oldalra navigál.)</p>
+
+    <h2>7. GitHub Pages</h2>
+    <p>A projekt a <code>main</code> ágról, a repó gyökeréből publikálódik GitHub
+      Pages-en keresztül (Settings → Pages → Source: <code>main</code> /
+      <code>/ (root)</code>).</p>
+
+    <h2>8. Továbbfejlesztési ötletek</h2>
+    <ul>
+      <li>Fotók/illusztrációk hozzáadása az egyes állomásokhoz (jelenleg tisztán
+        tipográfia- és CSS-alapú a design, hogy ne legyen szükség képi
+        jogtisztázásra).</li>
+      <li>Hangos, felolvasott verzió (a közkincs Babits/Garay-versekhez ez jogilag is
+        egyszerű).</li>
+      <li>Több nyelvű (angol) verzió a nemzetközi látogatóknak.</li>
+      <li>Offline/PWA támogatás mobilos, helyszíni bejáráshoz.</li>
+    </ul>
+
+    <p style="margin-top:2.5rem; font-size:0.85rem;">
+      <a href="https://github.com/Csancus/DIGIT-LIS-IRODALMI-T-RA-TOLNA-MEGY-BEN/blob/main/MUKODES.md" target="_blank" rel="noopener">
+        Ez a leírás Markdown formátumban is elérhető a GitHub-repóban →
+      </a>
+    </p>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p><a href="index.html">← Vissza a sétához</a> · <a href="versek.html">Versek &amp; szerzők →</a></p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

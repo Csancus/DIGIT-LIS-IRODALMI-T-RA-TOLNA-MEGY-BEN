@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Versek és szerzők — Irodalmi Séta Szekszárdon</title>
 <meta name="description" content="Babits Mihály, Garay János, Baka István, Mészöly Miklós és Dienes Valéria szekszárdi kötődésű versei, szövegrészletei és helyszínei.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍇</text></svg>">
@@ -18,12 +18,17 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
       Irodalmi Séta Szekszárdon
     </a>
-    <div class="navlinks">
+    <div class="navlinks" id="main-navlinks">
       <a href="index.html">A séta</a>
       <a href="versek.html" class="active">Versek &amp; szerzők</a>
-      <a href="MUKODES.md">Működés</a>
+      <a href="mukodes.html">Működés</a>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()">☀︎ / ☾</button>
+    <div class="nav-right">
+      <button class="theme-toggle" onclick="toggleTheme()">☀︎ / ☾</button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Menü megnyitása" aria-expanded="false" aria-controls="main-navlinks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
   </div>
 </nav>
 
